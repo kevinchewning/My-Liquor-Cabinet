@@ -3,6 +3,7 @@
 //Global Variables
 var ingredients;
 var myIngredients;
+var myIngredientsString;
 var recipes;
 
 //API Key(s)
@@ -23,10 +24,12 @@ var recipes;
 
 //TODO Write a function to fetch recipes from CocktailDB
 
-//TODO Write a function to fetch wiki's for populated recipes
+//TODO Write a function to fetch wiki's for populated recipes (may need to go within render recipe cards function)
 
-//TODO Write a function to fetch youtube links for populated recipes
+//TODO Write a function to fetch youtube links for populated recipes (may need to go within render recipe cards function)
 
 //TODO Write a function to render popular recipe cards on page load
 
 //TODO Write a function to render recipe cards upon search
+
+//TODO Write a function to render a recipe modal when recipe is clicked
