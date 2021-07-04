@@ -19,6 +19,7 @@ var recipes;
 
 //TODO Write a function to render ingredient list with removal buttons from form 
      //(Should utilize local storage to save our ingredients on refresh)
+     //Removal buttons should have a class called ".remove" for the event listener
 
 //TODO Write a function to fetch recipes from CocktailDB
 
