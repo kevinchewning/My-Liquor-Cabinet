@@ -1,13 +1,14 @@
 //Element Selecting Variables
 
 //Global Variables
-var ingredients;
-var myIngredients;
+var ingredients = [];
+var myIngredients = [];
 var myIngredientsString;
-var recipes;
+var recipes = [];
 
 //API Key(s)
 //TODO Get API key from "https://www.thecocktaildb.com/api.php"
+var cocktailAPI = 523532
 
 //TODO Get API key from "https://www.mediawiki.org/wiki/API:Main_page#API_documentation"
 
@@ -17,6 +18,22 @@ var recipes;
 
 //Functions
 //TODO Write a function to fetch the ingredient list from CocktailDB
+fetch("https://the-cocktail-db.p.rapidapi.com/list.php?i=list", {
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-key": "35d6c6f44bmshd692617dc44705dp131153jsnc3bf1d0d4e09",
+		"x-rapidapi-host": "the-cocktail-db.p.rapidapi.com"
+	}
+})
+.then(function (response) {
+     return response.json();
+   })
+   .then(function (data) {
+     for (i = 0; i < data.drinks.length; i++) {
+          ingredients.push(data.drinks[i].strIngredient1);
+     }
+   });
+
 
 //TODO Write a function to render ingredient list with removal buttons from form 
      //(Should utilize local storage to save our ingredients on refresh)
