@@ -17,7 +17,7 @@ var cocktailAPI = 523532
 //Event Listeners
 
 //Functions
-//TODO Write a function to fetch the ingredient list from CocktailDB
+//Fetch the ingredient list from CocktailDB
 fetch("https://the-cocktail-db.p.rapidapi.com/list.php?i=list", {
 	"method": "GET",
 	"headers": {
@@ -32,6 +32,7 @@ fetch("https://the-cocktail-db.p.rapidapi.com/list.php?i=list", {
      for (i = 0; i < data.drinks.length; i++) {
           ingredients.push(data.drinks[i].strIngredient1);
      }
+     console.log(ingredients);
    });
 
 
