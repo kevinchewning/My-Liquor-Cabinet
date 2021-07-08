@@ -19,9 +19,9 @@ var cocktailAPI = 523532
 //TODO Get API key from "https://developers.google.com/youtube/v3"
 
 //Event Listeners
-searchBtn.on('click', fetchRecipes);
-ingrList.on('click', '.remove', removeIngr);
-dropIngr.on('click', addIngr);
+//searchBtn.on('click', fetchRecipes);
+//ingrList.on('click', '.remove', removeIngr);
+//dropIngr.on('click', addIngr);
 
 //Functions
 //Fetch the ingredient list from CocktailDB
