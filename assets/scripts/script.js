@@ -1,5 +1,8 @@
 //Element Selecting Variables
-//branch testing
+var ingrList = $('#ingr-list');
+var cardCont = $('#card-container');
+var searchBtn = $('#searchBtn');
+var dropIngr = $('.ingredient');
 
 //Global Variables
 var ingredients = [];
@@ -16,6 +19,9 @@ var cocktailAPI = 523532
 //TODO Get API key from "https://developers.google.com/youtube/v3"
 
 //Event Listeners
+searchBtn.on('click', fetchRecipes);
+ingrList.on('click', '.remove', removeIngr);
+dropIngr.on('click', addIngr);
 
 //Functions
 //Fetch the ingredient list from CocktailDB
@@ -42,7 +48,7 @@ function dropdownIngr () {
      for(i = 0; i < ingredients.length; i++) {
           var ingredient = $('<div>');
           ingredient.text(ingredients[i]);
-          ingredient.attr('id', ingredients[i]);
+          ingredient.attr('data-ingredient', ingredients[i]);
           ingredient.addClass('ingredient');
 
           $('#myDropdown').append(ingredient);
