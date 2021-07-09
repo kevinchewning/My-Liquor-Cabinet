@@ -9,10 +9,12 @@ var ingredients = [];
 var myIngredients = [];
 var myIngredientsString;
 var recipes = [];
+var recipeIDs = [];
+var myRecipes = [];
 
 //API Key(s)
 //TODO Get API key from "https://www.thecocktaildb.com/api.php"
-var cocktailAPI = 523532
+var cocktailAPI = 9973533;
 
 //TODO Get API key from "https://www.mediawiki.org/wiki/API:Main_page#API_documentation"
 
@@ -23,7 +25,7 @@ searchBtn.on('click', fetchRecipes);
 //ingrList.on('click', '.remove', removeIngr);
 
 //Functions
-//Fetch the ingredient list from CocktailDB
+//Fetch the entire ingredient list from CocktailDB
 fetch("https://the-cocktail-db.p.rapidapi.com/list.php?i=list", {
      "method": "GET",
      "headers": {
@@ -36,9 +38,10 @@ fetch("https://the-cocktail-db.p.rapidapi.com/list.php?i=list", {
      })
      .then(function (data) {
           for (i = 0; i < data.drinks.length; i++) {
+               //push server ingredients to ingredients array
                ingredients.push(data.drinks[i].strIngredient1);
           }
-          console.log(ingredients);
+          //Render ingredients to dropdown menu after add.
           dropdownIngr();
      });
 
@@ -59,6 +62,7 @@ function dropdown() {
      document.getElementById("myDropdown").classList.toggle("show");
 }
 
+//filter dropdown ingredients to match what is typed in search box
 function filterFunction() {
      var input = document.getElementById("myInput");
      var filter = input.value.toUpperCase();
@@ -73,31 +77,29 @@ function filterFunction() {
      }
 }
 
-//TODO Write a function that adds ingredient from dropdown to myIngredients when clicked.
+//TODO Write a function that adds ingredient from dropdown to myIngredients variable when clicked.
 dropIngr.on('click', '.ingredient', function addIngr () {
+     //retrieves ingredient name from the data-ingredient attribute of element clicked
      var ingredient = $(this).attr('data-ingredient');
      
+     //only adds to myIngredients if it is not there already
      if (!myIngredients.includes(ingredient)) {
-     var ingredientEl = $('<li>');
-     var remove = $('<div>');
-     ingredientEl.text(ingredient);
-     ingredientEl.addClass('myIngredients');
-     remove.text('X');
-     remove.addClass('remove');
+          //create element w/ remove button and append to ingredient list
+          var ingredientEl = $('<li>');
+          var remove = $('<div>');
+          ingredientEl.text(ingredient);
+          ingredientEl.addClass('myIngredients');
+          remove.text('X');
+          remove.addClass('remove');
 
-     myIngredients.push($(this).attr('data-ingredient'));
-     console.log(myIngredients);
+          //push ingredient value to myIngredients variable
+          myIngredients.push($(this).attr('data-ingredient'));
 
-     ingrList.append(ingredientEl);
-     ingredientEl.append(remove);
+          ingrList.append(ingredientEl);
+          ingredientEl.append(remove);
 }});
 
-//TODO Write a function to render ingredient list with removal buttons from form 
-//(Should utilize local storage to save our ingredients on refresh)
-//Removal buttons should have a class called ".remove" for the event listener
-
-
-//Discuss
+//Brit's remove ingredient code is below. Does not execute correctly.
 /*
 function removeIngr() {
      var ingredientIndex = ingredients.findIndex((el) => el.id === id);
@@ -129,31 +131,98 @@ document.querySelector("ingredients-input").addEventListener("change", (a) => {
 });
 */
 
-
 //TODO Write a function to remove ingredient when remove button is clicked (remove from screen and from myIngredients variable.)
+function removeIngr() {
+
+}
+
+/*CocktailDB's API doe's not allow you to pull recipes from available ingredients. It only allows you
+   to search for an exact match with multiple ingredients. Instead we are going to pull all alcoholic recipes
+   and add the match functionality ourselves*/
 
 
-//TODO Write a function to fetch recipes from CocktailDB
-
-function fetchRecipes () {
-     var ingredients = "";
-
-     for (i = 0; i < myIngredients.length; i++) {
-          ingredients += myIngredients[i] + "%20";
-     }
-
-     var request = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=" + ingredients
-     var requestURL = request
-     console.log(requestURL);
-
-     fetch(requestURL)
+//Collects all alcoholic drink ID's from database
+function fetchAllIDs() {
+     fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?a=Alcoholic")
      .then(function (response) {
           return response.json();
      })
      .then(function (data) {
-          console.log(data);
+          //created a loop to push drink id numbers to the recipeIDs array
+          for (i = 0; i < data.drinks.length; i++) {
+               recipeIDs.push(data.drinks[i].idDrink);
+          }
+          console.log(recipeIDs);
      })
 }
+
+//Collects all necessary recipe info from database and stores it in recipes object
+function fetchAllRecipes() {
+     for (i = 0; i < recipeIDs.length; i++) {
+          var requestURL = "https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=" + recipeIDs[i];
+          fetch(requestURL)
+          .then(function (response) {
+               return response.json();
+          })
+          .then(function (data) {
+               var recipe = {
+                    name: "",
+                    id: "",
+                    thumbnail: "",
+                    glassType: "",
+                    ingredients: [],
+                    measurements: [],
+                    instructions: ""
+               }
+
+               recipe.name = data.drinks[0].strDrink;
+               recipe.id = data.drinks[0].idDrink;
+               recipe.thumbnail = data.drinks[0].strDrinkThumb;
+               recipe.glassType = data.drinks[0].strGlass;
+
+               //ingredients and measurements are not part of an array but individually named values
+               //Created loops to pull data from all values that are not 'null'
+               for (i = 1; i < 16; i++) {
+                    var ingredient = 'strIngredient' + i;
+                    if (data.drinks[0][ingredient] != null) {
+                         recipe.ingredients.push(data.drinks[0][ingredient]);
+                    }
+               }
+
+               for (i = 1; i < 16; i++) {
+                    var measurement = 'strMeasure' + i;
+                    if (data.drinks[0][measurement] != null) {
+                         recipe.measurements.push(data.drinks[0][measurement]);
+                    }
+               }
+
+               recipe.instructions = data.drinks[0].strInstructions;
+               
+               //push recipe object into our local recipes array
+               recipes.push(recipe);
+          })
+     }
+     console.log(recipes);
+}
+
+//Fetches all ID's on page load
+fetchAllIDs();
+//Set timeout to allow time for ID's to populate before fetching recipes
+setTimeout(fetchAllRecipes, 1500);
+
+//Fetches all recipes that have exact ingredient matches to available ingredients when search button is clicked.
+function fetchRecipes() {
+     myRecipes = [];
+     for (i = 0; i < recipes.length; i++) {
+          match = recipes[i].ingredients.every(val => myIngredients.includes(val));
+          if (match) {
+               myRecipes.push(recipes[i]);
+          }
+     }
+     //Recipes that match are logged to the console. This is the info needed to render recipe cards.
+     console.log(myRecipes);
+}
+
 
 
 //TODO Write a function to fetch wiki's for populated recipes (may need to go within render recipe cards function)
