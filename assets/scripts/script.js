@@ -2,7 +2,7 @@
 var ingrList = $('#ingr-list');
 var cardCont = $('#card-container');
 var searchBtn = $('#searchBtn');
-var dropIngr = $('.ingredient');
+var dropIngr = $('#myDropdown');
 
 //Global Variables
 var ingredients = [];
@@ -19,9 +19,8 @@ var cocktailAPI = 523532
 //TODO Get API key from "https://developers.google.com/youtube/v3"
 
 //Event Listeners
-//searchBtn.on('click', fetchRecipes);
+searchBtn.on('click', fetchRecipes);
 //ingrList.on('click', '.remove', removeIngr);
-//dropIngr.on('click', addIngr);
 
 //Functions
 //Fetch the ingredient list from CocktailDB
@@ -75,23 +74,47 @@ function filterFunction() {
 }
 
 //TODO Write a function that adds ingredient from dropdown to myIngredients when clicked.
+dropIngr.on('click', '.ingredient', function addIngr () {
+     var ingredient = $(this).attr('data-ingredient');
+     
+     if (!myIngredients.includes(ingredient)) {
+     var ingredientEl = $('<li>');
+     var remove = $('<div>');
+     ingredientEl.text(ingredient);
+     ingredientEl.addClass('myIngredients');
+     remove.text('X');
+     remove.addClass('remove');
+
+     myIngredients.push($(this).attr('data-ingredient'));
+     console.log(myIngredients);
+
+     ingrList.append(ingredientEl);
+     ingredientEl.append(remove);
+}});
 
 //TODO Write a function to render ingredient list with removal buttons from form 
      //(Should utilize local storage to save our ingredients on refresh)
      //Removal buttons should have a class called ".remove" for the event listener
 
-//TODO Write a function to fetch recipes from CocktailDB
-/*
-function fecthRecipes () {
-     var requestURL = "https://the-cocktail-db.p.rapidapi.com/filter.php?i=" + //myIngredients need stringed together here
+//TODO Write a function to remove ingredient when remove button is clicked (remove from screen and from myIngredients variable.)
+function removeIngr() {
 
-     fetch(requestURL, {
-          "method": "GET",
-          "headers": {
-               "x-rapidapi-key": "35d6c6f44bmshd692617dc44705dp131153jsnc3bf1d0d4e09",
-               "x-rapidapi-host": "the-cocktail-db.p.rapidapi.com"
-          }
-     })
+}
+
+//TODO Write a function to fetch recipes from CocktailDB
+
+function fetchRecipes () {
+     var ingredients = "";
+
+     for (i = 0; i < myIngredients.length; i++) {
+          ingredients += myIngredients[i] + "%20";
+     }
+
+     var request = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=" + ingredients
+     var requestURL = request
+     console.log(requestURL);
+
+     fetch(requestURL)
      .then(function (response) {
           return response.json();
      })
@@ -99,7 +122,7 @@ function fecthRecipes () {
           console.log(data);
      })
 }
-*/
+
 
 //TODO Write a function to fetch wiki's for populated recipes (may need to go within render recipe cards function)
 
