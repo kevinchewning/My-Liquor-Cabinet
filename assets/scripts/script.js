@@ -95,6 +95,10 @@ dropIngr.on('click', '.ingredient', function addIngr () {
 //TODO Write a function to render ingredient list with removal buttons from form 
 //(Should utilize local storage to save our ingredients on refresh)
 //Removal buttons should have a class called ".remove" for the event listener
+
+
+//Discuss
+/*
 function removeIngr() {
      var ingredientIndex = ingredients.findIndex((el) => el.id === id);
      ingredients.splice(ingredientIndex, 1);
@@ -123,11 +127,11 @@ document.querySelector("ingredients-input").addEventListener("change", (a) => {
      });
      renderElem();
 });
+*/
+
 
 //TODO Write a function to remove ingredient when remove button is clicked (remove from screen and from myIngredients variable.)
-function removeIngr() {
 
-}
 
 //TODO Write a function to fetch recipes from CocktailDB
 
