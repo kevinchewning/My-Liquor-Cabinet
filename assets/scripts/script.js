@@ -32,8 +32,31 @@ fetch("https://the-cocktail-db.p.rapidapi.com/list.php?i=list", {
      for (i = 0; i < data.drinks.length; i++) {
           ingredients.push(data.drinks[i].strIngredient1);
      }
+     console.log(ingredients);
+     dropdownIngr();
    });
 
+
+   //TODO Write a function to render dropdown menu
+function dropdown() {
+     document.getElementById("myDropdown").classList.toggle("show");
+}
+
+function filterFunction() {
+     var input = document.getElementById("myInput");
+     var filter = input.value.toUpperCase();
+     var a = $('.ingredient')
+     for (i = 0; i < a.length; i++) {
+          txtValue = a[i].textContent || a[i].innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          a[i].style.display = "";
+          } else {
+          a[i].style.display = "none";
+          }
+     }
+}
+
+//TODO Write a function that adds ingredient from dropdown to myIngredients when clicked.
 
 //TODO Write a function to render ingredient list with removal buttons from form 
      //(Should utilize local storage to save our ingredients on refresh)
