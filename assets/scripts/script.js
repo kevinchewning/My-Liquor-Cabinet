@@ -93,7 +93,9 @@ dropIngr.on('click', '.ingredient', function addIngr () {
           remove.addClass('remove');
 
           //push ingredient value to myIngredients variable
-          myIngredients.push($(this).attr('data-ingredient'));
+          //Made lowercase for matching functions
+          var lowercase = $(this).attr('data-ingredient').toLowerCase();
+          myIngredients.push(lowercase);
 
           ingrList.append(ingredientEl);
           ingredientEl.append(remove);
@@ -152,7 +154,6 @@ function fetchAllIDs() {
           for (i = 0; i < data.drinks.length; i++) {
                recipeIDs.push(data.drinks[i].idDrink);
           }
-          console.log(recipeIDs);
      })
 }
 
@@ -185,7 +186,9 @@ function fetchAllRecipes() {
                for (i = 1; i < 16; i++) {
                     var ingredient = 'strIngredient' + i;
                     if (data.drinks[0][ingredient] != null) {
-                         recipe.ingredients.push(data.drinks[0][ingredient]);
+                         //Made lowercase for matching purposes
+                         var lowercase = data.drinks[0][ingredient].toLowerCase();
+                         recipe.ingredients.push(lowercase);
                     }
                }
 
@@ -202,7 +205,6 @@ function fetchAllRecipes() {
                recipes.push(recipe);
           })
      }
-     console.log(recipes);
 }
 
 //Fetches all ID's on page load
