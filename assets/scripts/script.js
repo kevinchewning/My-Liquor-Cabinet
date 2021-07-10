@@ -133,7 +133,6 @@ document.querySelector("ingredients-input").addEventListener("change", (a) => {
 });
 */
 
-
 //TODO Write a function to remove ingredient when remove button is clicked (remove from screen and from myIngredients variable.)
 function removeIngr() {
 
@@ -225,6 +224,7 @@ function fetchRecipes() {
      //Recipes that match are logged to the console. This is the info needed to render recipe cards.
      console.log(myRecipes);
 }
+
 
 
 //TODO Write a function to fetch wiki's for populated recipes (may need to go within render recipe cards function)
