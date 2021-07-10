@@ -12,17 +12,92 @@
   </head>
 
   <body>
-  <!--TODO Create and style header (id="header")-->
+  
+    <section class="hero" style="background-image: url('https://images.pexels.com/photos/1283219/pexels-photo-1283219.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title has-text-white">
+            My liquor cabinet
+          </h1>
+          <h2 class="subtitle has-text-white">
+            example
+          </h2>
+        </div>
+      </div>
+    </section>
 
-  <!--TODO Create container for ingredient form and ingredient list. (id="ingr-container")-->
-    <!--TODO Create ingredient form (id="ingr-form")-->
-      <!--TODO create a searchable dropdown list (id="dropdown") see:"https://www.w3schools.com/howto/howto_js_filter_dropdown.asp"-->
-      <!--TODO create an ADD button next to the dropdown (id="addBtn")-->
-      <!--TODO create a SEARCH RECIPES button (id="searchBtn")-->
-    <!--TODO Create UL for ingredients (id="ingr-list")-->
-
-  <!--TODO Create container for recipe cards (id="card-container")-->
-
+    <div class="columns">
+      <div class="column-1 is-one-quarter">
+        <div id="ingr-container">
+          <div id="ingr-form">
+            <!--Searchable dropdown for ingredients-->
+            <div class="dropdown">
+              <button onclick="dropdown()" class="dropbtn">Ingredients▽</button>
+              <div id="myDropdown" class="dropdown-content">
+                <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+              </div>
+            </div>
+    
+            <!--SEARCH RECIPES button-->
+            <button id="searchBtn">Search Recipes</button>
+          </div>
+          
+          <!--UL for ingredients-->
+          <ul id="ingr-list"></ul>
+        </div>
+    
+        <!--TODO Create container for recipe cards (id="card-container")-->
+        <div id="card-container"></div>
+      </div>
+      <div class="column-2">
+        <div class="card">
+          <div class="card-content">
+            <div class="content">
+              example
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div class="content">
+              example
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column-3">
+        <div class="card">
+          <div class="card-content">
+            <div class="content">
+              example2
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div class="content">
+              example2
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column-4">
+        <div class="card">
+          <div class="card-content">
+            <div class="content">
+              example3
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div class="content">
+              example3
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="./assets/scripts/script.js"></script>
   </body>
