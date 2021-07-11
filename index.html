@@ -16,14 +16,25 @@
     <header id="header">My Liquor Cabinet</header>
 
     <div id="ingr-container">
-      <div id="ingr-form">
+      <div id="ingr-form panel">
         <!--Searchable dropdown for ingredients-->
+        <p class="panel-heading">Ingredients</p>
+        <div class="panel-block">
+          <p class="control has-icons-left">
+            <input class="input" type="text" placeholder="Search" id="myInput" onkeyup="filterFunction()">
+            <span class="icon is-left">
+              <i class="fas fa-search" aria-hidden="true"></i>
+            </span>
+          </p>
+        </div>
+        <!--
         <div class="dropdown">
           <button onclick="dropdown()" class="dropbtn">Ingredients▽</button>
           <div id="myDropdown" class="dropdown-content">
             <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-          </div>
+          </div>          
         </div>
+        -->
 
         <!--SEARCH RECIPES button-->
         <button id="searchBtn">Search Recipes</button>
