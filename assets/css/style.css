@@ -2,33 +2,8 @@
 We are using Bulma's CSS framework. Refer to documentation here "https://bulma.io/documentation/overview/start/"
 */
 
-
-/*Dropdown ingredients*/
-.dropbtn {
-    background-color: rgb(255, 0, 0);
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
-
-.dropbtn:hover, .dropbtn:focus {
-    background-color: #860000;
-}
-
-#myInput {
-    box-sizing: border-box;
-    font-size: 16px;
-    padding: 14px 20px 12px 45px;
-    border: none;
-    border-bottom: 1px solid #ddd;
-    position: sticky;
-    top: 0;
-}
-
-#myInput:focus {
-    outline: 3px solid #ddd;
+#ingr-container {
+    width: 25%;
 }
 
 .dropdown {
@@ -36,22 +11,18 @@ We are using Bulma's CSS framework. Refer to documentation here "https://bulma.i
     display: inline-block;
 }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f6f6f6;
-    min-width: 230px;
-    border: 1px solid #ddd;
-    z-index: 1;
+#block-1, #ingr-list{
     overflow: auto;
-    max-height: 500px;
-    padding-top: 0;
+    max-height: 200px;
+}
+
+#ingr-list li {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 .dropdown-content div {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
     display: block;
 }
 
@@ -59,6 +30,18 @@ We are using Bulma's CSS framework. Refer to documentation here "https://bulma.i
     background-color: #f1f1f1
 }
 
-.show {
-    display:block;
+.remove {
+    display: inline-block;
+    position: absolute;
+    right: 15px;
+    cursor: pointer;
+    user-select: none;
+}
+
+#searchBtn {
+    margin-bottom: 20px;
+}
+
+#myIngrHeader {
+    background-color: #ffe08a;
 }
