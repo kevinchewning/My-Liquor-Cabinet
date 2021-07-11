@@ -2,7 +2,7 @@
 var ingrList = $('#ingr-list');
 var cardCont = $('#card-container');
 var searchBtn = $('#searchBtn');
-var dropIngr = $('#myDropdown');
+var dropIngr = $('#block-1');
 
 //Global Variables
 var ingredients = [];
@@ -48,12 +48,12 @@ fetch("https://the-cocktail-db.p.rapidapi.com/list.php?i=list", {
 //TODO Write a function to add all ingredients to dropdown
 function dropdownIngr() {
      for (i = 0; i < ingredients.length; i++) {
-          var ingredient = $('<div>');
+          var ingredient = $('<a>');
           ingredient.text(ingredients[i]);
           ingredient.attr('data-ingredient', ingredients[i]);
-          ingredient.addClass('ingredient');
+          ingredient.addClass('ingredient panel-block');
 
-          $('#myDropdown').append(ingredient);
+          $('#block-1').append(ingredient);
      }
 }
 
@@ -78,66 +78,43 @@ function filterFunction() {
 }
 
 //TODO Write a function that adds ingredient from dropdown to myIngredients variable when clicked.
-dropIngr.on('click', '.ingredient', function addIngr () {
+dropIngr.on('click', 'a', function addIngr () {
      //retrieves ingredient name from the data-ingredient attribute of element clicked
      var ingredient = $(this).attr('data-ingredient');
+     var lowercase = $(this).attr('data-ingredient').toLowerCase();
      
      //only adds to myIngredients if it is not there already
-     if (!myIngredients.includes(ingredient)) {
+     if (!myIngredients.includes(lowercase)) {
           //create element w/ remove button and append to ingredient list
           var ingredientEl = $('<li>');
           var remove = $('<div>');
           ingredientEl.text(ingredient);
-          ingredientEl.addClass('myIngredients');
-          remove.text('X');
+          ingredientEl.attr('data-ingredient', lowercase);
+          ingredientEl.addClass('myIngredients notification');
+          remove.text('✖');
           remove.addClass('remove');
 
           //push ingredient value to myIngredients variable
           //Made lowercase for matching functions
-          var lowercase = $(this).attr('data-ingredient').toLowerCase();
           myIngredients.push(lowercase);
 
           ingrList.append(ingredientEl);
           ingredientEl.append(remove);
-}});
-
-//Brit's remove ingredient code is below. Does not execute correctly.
-/*
-function removeIngr() {
-     var ingredientIndex = ingredients.findIndex((el) => el.id === id);
-     ingredients.splice(ingredientIndex, 1);
-     renderElem();
-     renderElem();
-};
-
-function renderElem() {
-     document.querySelector("ingredients").innerHTML = "";
-     ingredients.forEach((emp) => {
-          var ingredientUl = document.createElement("a");
-          var removeButton = document.createElement("button");
-          ingredientUl.textContent = emp.title;
-          removeButton.addEventListener("click", (a) => {
-               removeButton(a, emp.id);
-          });
-          document.querySelector("ingredients").append(ingredientUl, removeButton);
-     });
-}
-document.querySelector("ingredients-input").addEventListener("change", (a) => {
-     a.preventDefault();
-     var id = uuid();
-     ingredients.push({
-          id: id,
-          title: a.target.value
-     });
-     renderElem();
+     }
 });
-*/
 
 
 //TODO Write a function to remove ingredient when remove button is clicked (remove from screen and from myIngredients variable.)
-function removeIngr() {
+ingrList.on('click', '.remove', function removeIngr() {
+     var ingredient = $(this).parent().attr('data-ingredient');
+     var index = myIngredients.indexOf(ingredient);
 
-}
+     if (index > -1) {
+       myIngredients.splice(index, 1);
+     }
+
+     $(this).parent().remove();
+})
 
 /*CocktailDB's API doe's not allow you to pull recipes from available ingredients. It only allows you
    to search for an exact match with multiple ingredients. Instead we are going to pull all alcoholic recipes
@@ -225,6 +202,7 @@ function fetchRecipes() {
      //Recipes that match are logged to the console. This is the info needed to render recipe cards.
      console.log(myRecipes);
 }
+
 
 
 //TODO Write a function to fetch wiki's for populated recipes (may need to go within render recipe cards function)
