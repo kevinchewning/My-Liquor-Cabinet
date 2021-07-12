@@ -13,6 +13,7 @@
 
   <body>
   
+    <!--Header-->
     <section class="hero" style="background-image: url('https://images.pexels.com/photos/1283219/pexels-photo-1283219.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')">
       <div class="hero-body">
         <div class="container">
@@ -26,29 +27,32 @@
       </div>
     </section>
 
-    <div class="columns">
-      <div class="column-1 is-one-quarter">
-        <div id="ingr-container">
-          <div id="ingr-form">
-            <!--Searchable dropdown for ingredients-->
-            <div class="dropdown">
-              <button onclick="dropdown()" class="dropbtn">Ingredients▽</button>
-              <div id="myDropdown" class="dropdown-content">
-                <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-              </div>
-            </div>
-    
-            <!--SEARCH RECIPES button-->
-            <button id="searchBtn">Search Recipes</button>
-          </div>
-          
-          <!--UL for ingredients-->
-          <ul id="ingr-list"></ul>
+    <div id="ingr-container">
+      <div id="ingr-form" class="panel dropdown-content is-warning">
+        <!--Searchable dropdown for ingredients-->
+        <p class="panel-heading">Ingredients</p>
+        <div class="panel-block">
+          <p class="control has-icons-left">
+            <input class="input" type="text" placeholder="Search" id="myInput" onkeyup="filterFunction()" autocomplete="off">
+            <span class="icon is-left">
+              <i class="fas fa-search" aria-hidden="true"></i>
+            </span>
+          </p>
+          <div id="block-1"></div>
         </div>
-    
-        <!--TODO Create container for recipe cards (id="card-container")-->
-        <div id="card-container"></div>
       </div>
+      <!--SEARCH RECIPES button-->
+      <button id="searchBtn" class="button is-light">Search Recipes</button>
+      
+      <!--UL for ingredients-->
+      <p class="panel-heading" id="myIngrHeader">My Ingredients</p>
+      <ul id="ingr-list"></ul>
+    </div>
+
+     
+    <!--TODO Create container for recipe cards (id="card-container")-->
+    <div id="card-container"></div>
+    <!--
       <div class="column-2">
         <div class="card">
           <div class="card-content">
@@ -98,6 +102,7 @@
         </div>
       </div>
     </div>
+  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="./assets/scripts/script.js"></script>
   </body>
