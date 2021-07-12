@@ -22,7 +22,6 @@ var cocktailAPI = 9973533;
 
 //Event Listeners
 searchBtn.on('click', fetchRecipes);
-//ingrList.on('click', '.remove', removeIngr);
 
 //Functions
 //Fetch the entire ingredient list from CocktailDB
@@ -202,7 +201,6 @@ function fetchRecipes() {
      //Recipes that match are logged to the console. This is the info needed to render recipe cards.
      console.log(myRecipes);
 }
-
 
 
 //TODO Write a function to fetch wiki's for populated recipes (may need to go within render recipe cards function)

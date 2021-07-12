@@ -1,9 +1,39 @@
 /*
 We are using Bulma's CSS framework. Refer to documentation here "https://bulma.io/documentation/overview/start/"
 */
+/*Dropdown ingredients*/
+
+:root{
+--rich-black-fogra-29: #011627ff;
+--antique-ruby: #8b2635ff;
+--metallic-seaweed: #177e89ff;
+--marigold: #f3a712ff;
+--ash-gray: #c2c5bbff;
+}
+
+html{
+    background-color: var(--antique-ruby);
+}
+
+.card{
+    margin: 5px;
+    margin-left: 20px;
+    margin-top: 20px;
+    padding: 7px;
+    height: 300px;
+    width: 300px;
+    background-color: var(--antique-ruby);
+    color: var(--marigold);
+
+}
+
+.columns{
+    margin: 20px;
+    margin-top: 10px;
+}
 
 #ingr-container {
-    width: 25%;
+    width: 20%;
 }
 
 .dropdown {
@@ -13,13 +43,17 @@ We are using Bulma's CSS framework. Refer to documentation here "https://bulma.i
 
 #block-1, #ingr-list{
     overflow: auto;
-    max-height: 200px;
+    max-height: 150px;
 }
 
 #ingr-list li {
     padding-top: 5px;
     padding-bottom: 5px;
     margin-bottom: 5px;
+}
+
+.dropdown-content {
+    padding-top: 0;
 }
 
 .dropdown-content div {
