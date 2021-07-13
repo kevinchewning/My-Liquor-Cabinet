@@ -19,7 +19,8 @@ var cocktailAPI = 9973533;
 //TODO Get API key from "https://www.mediawiki.org/wiki/API:Main_page#API_documentation"
 
 //TODO Get API key from "https://developers.google.com/youtube/v3"
-
+//let apiKey = "AIzaSyCxmS-DDoBQ-DA9kHkCIk7msct3umZi_Mw"//
+//let apiURL =  "https://www.googleapis.com/youtube/v3" + userInput + "&appid=" + apiKey;//
 //Event Listeners
 searchBtn.on('click', fetchRecipes);
 
@@ -206,7 +207,31 @@ function fetchRecipes() {
 //TODO Write a function to fetch wiki's for populated recipes (may need to go within render recipe cards function)
 
 //TODO Write a function to fetch youtube links for populated recipes (may need to go within render recipe cards function)
+$(document).ready(function(){
+     let apiKey = "AIzaSyCxmS-DDoBQ-DA9kHkCIk7msct3umZi_Mw";
 
+$("#searchBtn").on("click", function(){
+     let userInput = $("#myInput").val();
+
+     console.log(userInput);
+
+     getHowToVideo(userInput)
+})
+
+function getHowToVideo(userInput) {
+     console.log("how to make",userInput)
+
+     let apiURL="https://youtube.googleapis.com/youtube/v3/search?q=" + userInput + "&key=" + apiKey;
+
+     $.ajax({
+          type: "GET",
+          url: apiURL,
+          dataType:"JSON"
+     }).then(function(response){
+          console.log(response)
+     })
+}
+})
 //TODO Write a function to render popular recipe cards on page load
 
 //TODO Write a function to render recipe cards upon search
