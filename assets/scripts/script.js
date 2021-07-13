@@ -207,30 +207,23 @@ function fetchRecipes() {
 //TODO Write a function to fetch wiki's for populated recipes (may need to go within render recipe cards function)
 
 //TODO Write a function to fetch youtube links for populated recipes (may need to go within render recipe cards function)
-$(document).ready(function(){
+
+$('#card-container').on('click', '.youtube', function youTubeLink(){
+     var name = $(this).attr("data-recipe");
      let apiKey = "AIzaSyCxmS-DDoBQ-DA9kHkCIk7msct3umZi_Mw";
-
-$("#searchBtn").on("click", function(){
-     let userInput = $("#myInput").val();
-
-     console.log(userInput);
-
-     getHowToVideo(userInput)
-})
-
-function getHowToVideo(userInput) {
-     console.log("how to make",userInput)
-
-     let apiURL="https://youtube.googleapis.com/youtube/v3/search?q=" + userInput + "&key=" + apiKey;
+     let apiURL="https://youtube.googleapis.com/youtube/v3/search?q=" + name + "recipe" + "&key=" + apiKey;
 
      $.ajax({
           type: "GET",
           url: apiURL,
           dataType:"JSON"
      }).then(function(response){
+          var link= "https://youtube.com/watch?v=" + response.items[0].id.videoID
+          window.open(link)
           console.log(response)
+
+     
      })
-}
 })
 //TODO Write a function to render popular recipe cards on page load
 
