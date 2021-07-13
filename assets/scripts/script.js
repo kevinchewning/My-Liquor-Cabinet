@@ -198,6 +198,7 @@ function fetchRecipes() {
                myRecipes.push(recipes[i]);
           }
      }
+     renderTiles();
      //Recipes that match are logged to the console. This is the info needed to render recipe cards.
      console.log(myRecipes);
 }
@@ -208,7 +209,17 @@ function fetchRecipes() {
 //TODO Write a function to fetch youtube links for populated recipes (may need to go within render recipe cards function)
 
 //TODO Write a function to render popular recipe cards on page load
-
+$( window ).on( "load", function popularRecipes() {
+     var requestURL = "https://www.thecocktaildb.com/api/json/v2/9973533/popular.php"
+          fetch(requestURL)
+          .then(function (response) {
+               return response.json();
+          })
+          .then(function (data) {
+               console.log("popular")
+               console.log(data);
+})
+})
 //TODO Write a function to render recipe cards upon search
 
 //TODO Write a function to render a recipe modal when recipe is clicked
