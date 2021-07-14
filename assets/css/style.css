@@ -36,6 +36,10 @@ html{
     width: 20%;
 }
 
+#card-container {
+    width: 80%;
+}
+
 .dropdown {
     position: relative;
     display: inline-block;

@@ -235,13 +235,9 @@ $('#card-container').on('click', '.youtube', function youTubeLink(){
           var link= "https://youtube.com/watch?v=" + response.items[0].id.videoID
           window.open(link)
           console.log(response)
-<<<<<<< HEAD
-
-     
-=======
->>>>>>> 0dcbf90d8f3db3c208be1638d95ea5e9bcf60af1
      })
 })
+
 //TODO Write a function to render popular recipe cards on page load
 $( window ).on( "load", function popularRecipes() {
      var requestURL = "https://www.thecocktaildb.com/api/json/v2/9973533/popular.php"
@@ -294,10 +290,52 @@ console.log('popular');
 console.log(myRecipes);
 rendertiles();
 })
-<<<<<<< HEAD
-
-=======
->>>>>>> 0dcbf90d8f3db3c208be1638d95ea5e9bcf60af1
 //TODO Write a function to render recipe cards upon search
 
 //TODO Write a function to render a recipe modal when recipe is clicked
+cardCont.on('click', '.recipe', function renderModal() {
+     index = $(this).attr('data-index');
+
+     var modal = $('<div class="modal is-active">');
+     var modalBackground = $('<div class="modal-background">');
+     var modalContent = $('<div class="modal-content">');
+     var modalButton = $('<button class="modal-close is-large" aria-label="close">');
+
+     var recipeName = $('<h2 class="title">');
+     var recipeImage = $('<image class="image is-128x128>');
+     var recipeGlass = $('<p>');
+     var recipeIngredients = $('<div class="ingrModal">');
+     var recipeMeasurements = $('<div class="measModal">');
+     var recipeInstructions = $('<p>');
+
+     recipeName.text(myRecipes[index].name);
+     recipeImage.attr('src', myRecipes[index].thumbnail);
+     recipeGlass.text('Glass: ' + myRecipes[index].glassType);
+     
+     //Loop through available ingrdients/measurements and append them to their own divs
+     for(i = 0; i < myRecipes[index].ingredients; i++){
+          meas = $('<p>');
+          if (myRecipes[index].measurements[i] != undefined) {               
+               meas.text(myRecipes[index].measurements[i]);               
+          } else {
+               meas.text("");
+          }
+          recipeMeasurements.append(meas);
+
+          ingr = $('<p>');
+          ingr.text(myRecipes[index].ingredients[i]);
+          recipeIngredients.append(ingr);
+     }
+     recipeInstructions = myRecipes[index].instructions
+
+     $('body').append(modal);
+     modal.append(modalBackground);
+     modal.append(modalContent);
+     modal.append(modalButton);
+     modalContent.append(recipeName);
+     modalContent.append(recipeImage);
+     modalContent.append(recipeGlass);
+     modalContent.append(recipeIngredients);
+     modalContent.append(recipeMeasurements);
+     modalContent.append(recipeInstructions);
+})
