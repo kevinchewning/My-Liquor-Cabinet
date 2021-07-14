@@ -205,7 +205,22 @@ function fetchRecipes() {
 
 
 //TODO Write a function to fetch wiki's for populated recipes (may need to go within render recipe cards function)
+$('#card-container').on('click', '.wiki', function wikilink(){
+     var name = $(this).attr("data-recipe");
+     let apiURL="https://en.wikipedia.org/w/rest.php/v1/search/page?q=" + name + "drink&limit=1";
 
+     $.ajax({
+          type: "GET",
+          url: apiURL,
+          dataType:"JSON"
+     }).then(function(response){
+          var link= "https://en.wikipedia.org/wiki/" + response.pages[0].key
+          window.open(link)
+          console.log(response)
+
+     
+     })
+})
 //TODO Write a function to fetch youtube links for populated recipes (may need to go within render recipe cards function)
 
 $('#card-container').on('click', '.youtube', function youTubeLink(){
@@ -221,8 +236,6 @@ $('#card-container').on('click', '.youtube', function youTubeLink(){
           var link= "https://youtube.com/watch?v=" + response.items[0].id.videoID
           window.open(link)
           console.log(response)
-
-     
      })
 })
 //TODO Write a function to render popular recipe cards on page load
