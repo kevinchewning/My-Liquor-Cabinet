@@ -242,7 +242,7 @@ function fetchRecipes() {
                myRecipes.push(recipes[i]);
           }
      }
-     console.log(myRecipes);
+     
      cardCont.children().remove();
      //Show notification with number of results found
      var notification = $('<div id="notification" class="notification is-warning has-text-weight-bold">')
@@ -271,7 +271,8 @@ function fetchRecipes() {
 
 //Fetch wiki's for populated recipes (may need to go within render recipe cards function)
 $('#card-container').on('click', '.wiki', function wikilink(){
-     var name = $(this).attr("data-recipe");
+     var recipe = $(this).attr("data-recipe");
+     var name = recipe + " cocktail";
      let apiURL="https://en.wikipedia.org/w/rest.php/v1/search/page?q=" + name
 
      $.ajax({
@@ -357,7 +358,6 @@ $( window ).on( "load", function popularRecipes() {
 
 //Render a recipe modal when recipe is clicked
 cardCont.on('click', '.recipe', function renderModal() {
-     console.log('click');
      index = $(this).attr('data-index');
 
      var modal = $('<div id="modal" class="modal is-active">');
