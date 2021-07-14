@@ -19,7 +19,8 @@ var cocktailAPI = 9973533;
 //TODO Get API key from "https://www.mediawiki.org/wiki/API:Main_page#API_documentation"
 
 //TODO Get API key from "https://developers.google.com/youtube/v3"
-
+//let apiKey = "AIzaSyCxmS-DDoBQ-DA9kHkCIk7msct3umZi_Mw"//
+//let apiURL =  "https://www.googleapis.com/youtube/v3" + userInput + "&appid=" + apiKey;//
 //Event Listeners
 searchBtn.on('click', fetchRecipes);
 
@@ -206,6 +207,23 @@ function fetchRecipes() {
 
 //TODO Write a function to fetch youtube links for populated recipes (may need to go within render recipe cards function)
 
+$('#card-container').on('click', '.youtube', function youTubeLink(){
+     var name = $(this).attr("data-recipe");
+     let apiKey = "AIzaSyCxmS-DDoBQ-DA9kHkCIk7msct3umZi_Mw";
+     let apiURL="https://youtube.googleapis.com/youtube/v3/search?q=" + name + "recipe" + "&key=" + apiKey;
+
+     $.ajax({
+          type: "GET",
+          url: apiURL,
+          dataType:"JSON"
+     }).then(function(response){
+          var link= "https://youtube.com/watch?v=" + response.items[0].id.videoID
+          window.open(link)
+          console.log(response)
+
+     
+     })
+})
 //TODO Write a function to render popular recipe cards on page load
 $( window ).on( "load", function popularRecipes() {
      var requestURL = "https://www.thecocktaildb.com/api/json/v2/9973533/popular.php"
