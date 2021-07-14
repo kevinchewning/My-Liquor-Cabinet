@@ -344,7 +344,7 @@ $( window ).on( "load", function popularRecipes() {
                          }
                     }
      
-                    recipe.instructions = data.drinks[0].strInstructions;
+                    recipe.instructions = data.drinks[i].strInstructions;
                     
                     //push recipe object into our local recipes array
                     myRecipes.push(recipe);
