@@ -19,10 +19,10 @@ var cocktailAPI = 9973533;
 //TODO Get API key from "https://www.mediawiki.org/wiki/API:Main_page#API_documentation"
 
 //TODO Get API key from "https://developers.google.com/youtube/v3"
-
+//let apiKey = "AIzaSyCxmS-DDoBQ-DA9kHkCIk7msct3umZi_Mw"//
+//let apiURL =  "https://www.googleapis.com/youtube/v3" + userInput + "&appid=" + apiKey;//
 //Event Listeners
 searchBtn.on('click', fetchRecipes);
-//ingrList.on('click', '.remove', removeIngr);
 
 //Functions
 //Fetch the entire ingredient list from CocktailDB
@@ -199,17 +199,83 @@ function fetchRecipes() {
                myRecipes.push(recipes[i]);
           }
      }
-     //Recipes that match are logged to the console. This is the info needed to render recipe cards.
-     console.log(myRecipes);
+     rendertiles();
 }
-
 
 
 //TODO Write a function to fetch wiki's for populated recipes (may need to go within render recipe cards function)
 
 //TODO Write a function to fetch youtube links for populated recipes (may need to go within render recipe cards function)
 
+$('#card-container').on('click', '.youtube', function youTubeLink(){
+     var name = $(this).attr("data-recipe");
+     let apiKey = "AIzaSyCxmS-DDoBQ-DA9kHkCIk7msct3umZi_Mw";
+     let apiURL="https://youtube.googleapis.com/youtube/v3/search?q=" + name + "recipe" + "&key=" + apiKey;
+
+     $.ajax({
+          type: "GET",
+          url: apiURL,
+          dataType:"JSON"
+     }).then(function(response){
+          var link= "https://youtube.com/watch?v=" + response.items[0].id.videoID
+          window.open(link)
+          console.log(response)
+
+     
+     })
+})
 //TODO Write a function to render popular recipe cards on page load
+$( window ).on( "load", function popularRecipes() {
+     var requestURL = "https://www.thecocktaildb.com/api/json/v2/9973533/popular.php"
+          fetch(requestURL)
+          .then(function (response) {
+               return response.json();
+          })
+          .then(function (data) {
+               for(i = 0; i < 10; i++) {
+                    var recipe = {
+                         name: "",
+                         id: "",
+                         thumbnail: "",
+                         glassType: "",
+                         ingredients: [],
+                         measurements: [],
+                         instructions: ""
+                    }
+     
+                    recipe.name = data.drinks[i].strDrink;
+                    recipe.id = data.drinks[i].idDrink;
+                    recipe.thumbnail = data.drinks[i].strDrinkThumb;
+                    recipe.glassType = data.drinks[i].strGlass;
+     
+                    //ingredients and measurements are not part of an array but individually named values
+                    //Created loops to pull data from all values that are not 'null'
+                    for (x = 1; x < 16; x++) {
+                         var ingredient = 'strIngredient' + x;
+                         if (data.drinks[i][ingredient] != null) {
+                              //Made lowercase for matching purposes
+                              var lowercase = data.drinks[i][ingredient].toLowerCase();
+                              recipe.ingredients.push(lowercase);
+                         }
+                    }
+     
+                    for (x = 1; x < 16; x++) {
+                         var measurement = 'strMeasure' + x;
+                         if (data.drinks[i][measurement] != null) {
+                              recipe.measurements.push(data.drinks[i][measurement]);
+                         }
+                    }
+     
+                    recipe.instructions = data.drinks[0].strInstructions;
+                    
+                    //push recipe object into our local recipes array
+                    myRecipes.push(recipe);
+               }
+})
+console.log('popular');
+console.log(myRecipes);
+rendertiles();
+})
 
 //TODO Write a function to render recipe cards upon search
 
