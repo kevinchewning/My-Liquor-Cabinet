@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   
-  <!--Bulma and our stylesheet loaded into head-->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -28,7 +27,7 @@
       <div id="ingr-container" class="mt-4">
         <div id="ingr-form" class="panel dropdown-content is-warning">
           <!--Searchable dropdown for ingredients-->
-          <p class="panel-heading">Ingredients</p>
+          <p class="panel-heading">Add Ingredients</p>
           <div class="panel-block">
             <p class="control has-icons-left">
               <input class="input" type="text" placeholder="Search" id="myInput" onkeyup="filterFunction()" autocomplete="off">
@@ -48,7 +47,7 @@
       </div>
 
       
-      <!--TODO Create container for recipe cards (id="card-container")-->
+      <!--Container for recipe cards-->
       <div id="card-container" class="tile is-ancestor is-flex-wrap-wrap m-0 mt-4 is-justify-content-space-evenly">
         <div id="notification" class="notification is-warning has-text-weight-bold">
           <button class="delete"></button>
