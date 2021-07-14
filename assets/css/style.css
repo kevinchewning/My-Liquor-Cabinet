@@ -15,6 +15,10 @@ html{
     background-color: var(--antique-ruby);
 }
 
+main {
+    display: flex;
+}
+
 .card{
     margin: 5px;
     margin-left: 20px;
@@ -24,7 +28,6 @@ html{
     width: 300px;
     background-color: var(--antique-ruby);
     color: var(--marigold);
-
 }
 
 .columns{
@@ -33,11 +36,29 @@ html{
 }
 
 #ingr-container {
+    display: inline-flex;
+    flex-direction: column;
     width: 20%;
+    margin: 0;
 }
 
 #card-container {
-    width: 80%;
+    display: inline-flex;
+    width: 78%;
+    margin: 0;
+}
+
+#notification {
+    width: 88%;
+    height: fit-content;
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
 }
 
 .dropdown {
@@ -82,4 +103,17 @@ html{
 
 #myIngrHeader {
     background-color: #ffe08a;
+}
+
+.measModal {
+    display: inline-flex;
+    flex-direction: column;
+    width: fit-content;
+    align-items: flex-end;
+    margin-right: 10px;
+}
+
+.ingrModal {
+    display: inline-flex;
+    flex-direction: column;
 }
