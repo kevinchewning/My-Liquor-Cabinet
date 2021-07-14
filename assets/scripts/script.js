@@ -6,8 +6,8 @@ var dropIngr = $('#block-1');
 
 //Global Variables
 var ingredients = [];
-var myIngredients = [];
-var myIngredientsString;
+var myIngredientsString = localStorage.getItem("myIngredientsString");
+var myIngredients = JSON.parse(myIngredientsString) ?? [];
 var recipes = [];
 var recipeIDs = [];
 var myRecipes = [];
@@ -97,12 +97,30 @@ dropIngr.on('click', 'a', function addIngr () {
           //push ingredient value to myIngredients variable
           //Made lowercase for matching functions
           myIngredients.push(lowercase);
+          localStorage.setItem('myIngredientsString', JSON.stringify(myIngredients));
 
           ingrList.append(ingredientEl);
           ingredientEl.append(remove);
      }
 });
 
+//Render locally saved ingredients on load
+function renderMyIngredients () {
+     for(i = 0; i < myIngredients.length; i++) {
+          var ingredientEl = $('<li>');
+          var remove = $('<div>');
+          ingredientEl.text(myIngredients[i]);
+          ingredientEl.attr('data-ingredient', myIngredients[i]);
+          ingredientEl.addClass('myIngredients notification');
+          remove.text('✖');
+          remove.addClass('remove');
+
+          ingrList.append(ingredientEl);
+          ingredientEl.append(remove);
+     }
+}
+
+renderMyIngredients();
 
 //TODO Write a function to remove ingredient when remove button is clicked (remove from screen and from myIngredients variable.)
 ingrList.on('click', '.remove', function removeIngr() {
@@ -321,9 +339,9 @@ function rendertiles() {
           title.text(myRecipes[i].name);
           modalL.text("Full Recipe");
           modalL.attr('data-index', i);
-          youtubeL.text("Relevant YouTube");
+          youtubeL.text("YouTube");
           youtubeL.attr('data-recipe', myRecipes[i].name);
-          wikiL.text("Relevent Wikipedia");
+          wikiL.text("Wikipedia");
           wikiL.attr('data-recipe', myRecipes[i].name);
 
           cardCont.append(tile);         
@@ -384,6 +402,28 @@ cardCont.on('click', '.recipe', function renderModal() {
      modalBox.append(recipeIngredients);
      modalBox.append(recipeGlass);    
      modalBox.append(recipeInstructions);
+})
+
+$( window ).on( "load", function splashModal() {
+     console.log('load');
+     var modal = $('<div id="modal" class="modal is-active">');
+     var modalBackground = $('<div class="modal-background">');
+     var modalContent = $('<div class="modal-content">');
+     var modalBox = $('<div class="box">');
+     var modalButton = $('<button class="modal-close is-large" aria-label="close">');
+     var title = $('<h2 class="title">');
+     var text = $('<p>');
+
+     title.text('My Liquor Cabinet');
+     text.text('Welcome to My Liquor Cabinet! Ever wonder what cocktails you could make with what you already have at home? Look no further! Simply add the liquor and mixers you have at home and click "Search Recipes". We will show you what cocktails you have the ingredients for, how to make them, a link to a helpful YouTube video about how to make it, and a wiki article about it!');
+
+     $('body').append(modal);
+     modal.append(modalBackground);
+     modal.append(modalContent);
+     modal.append(modalButton);
+     modalContent.append(modalBox);
+     modalBox.append(title);
+     modalBox.append(text);
 })
 
 //Function to remove notification
