@@ -198,9 +198,7 @@ function fetchRecipes() {
                myRecipes.push(recipes[i]);
           }
      }
-     renderTiles();
-     //Recipes that match are logged to the console. This is the info needed to render recipe cards.
-     console.log(myRecipes);
+     rendertiles();
 }
 
 
@@ -216,9 +214,49 @@ $( window ).on( "load", function popularRecipes() {
                return response.json();
           })
           .then(function (data) {
-               console.log("popular")
-               console.log(data);
+               for(i = 0; i < 10; i++) {
+                    var recipe = {
+                         name: "",
+                         id: "",
+                         thumbnail: "",
+                         glassType: "",
+                         ingredients: [],
+                         measurements: [],
+                         instructions: ""
+                    }
+     
+                    recipe.name = data.drinks[i].strDrink;
+                    recipe.id = data.drinks[i].idDrink;
+                    recipe.thumbnail = data.drinks[i].strDrinkThumb;
+                    recipe.glassType = data.drinks[i].strGlass;
+     
+                    //ingredients and measurements are not part of an array but individually named values
+                    //Created loops to pull data from all values that are not 'null'
+                    for (x = 1; x < 16; x++) {
+                         var ingredient = 'strIngredient' + x;
+                         if (data.drinks[i][ingredient] != null) {
+                              //Made lowercase for matching purposes
+                              var lowercase = data.drinks[i][ingredient].toLowerCase();
+                              recipe.ingredients.push(lowercase);
+                         }
+                    }
+     
+                    for (x = 1; x < 16; x++) {
+                         var measurement = 'strMeasure' + x;
+                         if (data.drinks[i][measurement] != null) {
+                              recipe.measurements.push(data.drinks[i][measurement]);
+                         }
+                    }
+     
+                    recipe.instructions = data.drinks[0].strInstructions;
+                    
+                    //push recipe object into our local recipes array
+                    myRecipes.push(recipe);
+               }
 })
+console.log('popular');
+console.log(myRecipes);
+rendertiles();
 })
 //TODO Write a function to render recipe cards upon search
 
