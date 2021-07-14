@@ -17,9 +17,10 @@ html{
 
 main {
     display: flex;
+    justify-content: space-evenly;
 }
 
-.card{
+/*.card{
     margin: 5px;
     margin-left: 20px;
     margin-top: 20px;
@@ -28,7 +29,7 @@ main {
     width: 300px;
     background-color: var(--antique-ruby);
     color: var(--marigold);
-}
+}*/
 
 .columns{
     margin: 20px;
@@ -38,19 +39,23 @@ main {
 #ingr-container {
     display: inline-flex;
     flex-direction: column;
-    width: 20%;
+    flex: 0 0 20%;
     margin: 0;
 }
 
 #card-container {
     display: inline-flex;
-    width: 78%;
+    flex: 0 0 78%;
     margin: 0;
 }
 
 #notification {
     width: 88%;
     height: fit-content;
+}
+
+.myIngredients {
+    text-transform: capitalize;
 }
 
 .show {
@@ -105,6 +110,11 @@ main {
     background-color: #ffe08a;
 }
 
+.modal-content .box h2, .modal-content .box{
+    background-color: var(--antique-ruby);
+    color: white;
+}
+
 .measModal {
     display: inline-flex;
     flex-direction: column;
@@ -116,4 +126,41 @@ main {
 .ingrModal {
     display: inline-flex;
     flex-direction: column;
+}
+
+@media screen and (max-width: 1080px) {
+
+    .tile {
+        display: flex;
+        flex: 0 0 48%!important;
+    }
+
+    #ingr-container {
+        flex: 0 0 45%!important;
+    }
+    
+    #card-container {
+        flex: 0 0 45%!important;
+    }
+}
+
+@media screen and (max-width: 888px) {
+    main {
+        flex-wrap: wrap;
+    }
+
+    .tile {
+        display: flex;
+        flex: 0 0 98%!important;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    #ingr-container {
+        flex: 0 0 98%!important;
+    }
+    
+    #card-container {
+        flex: 0 0 98%!important;
+    }
 }
