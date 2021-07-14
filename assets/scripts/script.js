@@ -192,13 +192,34 @@ setTimeout(fetchAllRecipes, 1500);
 
 //Fetches all recipes that have exact ingredient matches to available ingredients when search button is clicked.
 function fetchRecipes() {
+     //Clear current recipes before new search
      myRecipes = [];
+
+     //Loop through available recipes and match recipes that user has all ingredients for
      for (i = 0; i < recipes.length; i++) {
           match = recipes[i].ingredients.every(val => myIngredients.includes(val));
           if (match) {
                myRecipes.push(recipes[i]);
           }
      }
+     console.log(myRecipes);
+     cardCont.children().remove();
+     //Show notification with number of results found
+     var notification = $('<div id="notification" class="notification is-warning has-text-weight-bold">')
+     var deleteBtn = $('<button class="delete">')
+     if (myRecipes.length == 0) {          
+          notification.text('Sorry! No recipes found that match your entered ingredients.')         
+     } else {
+          var message;
+          if (myRecipes.length == 1) {
+               message = "We have found " + myRecipes.length + " recipe that matches your ingredients!"
+          } else {
+               message = "We have found " + myRecipes.length + " recipes that match your ingredients!"
+          }
+          notification.text(message);          
+     }
+     cardCont.append(notification);
+     notification.append(deleteBtn);
      rendertiles();
 }
 
@@ -206,7 +227,7 @@ function fetchRecipes() {
 //TODO Write a function to fetch wiki's for populated recipes (may need to go within render recipe cards function)
 $('#card-container').on('click', '.wiki', function wikilink(){
      var name = $(this).attr("data-recipe");
-     let apiURL="https://en.wikipedia.org/w/rest.php/v1/search/page?q=" + name + "drink&limit=1";
+     let apiURL="https://en.wikipedia.org/w/rest.php/v1/search/page?q=" + name
 
      $.ajax({
           type: "GET",
@@ -214,10 +235,7 @@ $('#card-container').on('click', '.wiki', function wikilink(){
           dataType:"JSON"
      }).then(function(response){
           var link= "https://en.wikipedia.org/wiki/" + response.pages[0].key
-          window.open(link)
-          console.log(response)
-
-     
+          window.open(link)         
      })
 })
 //TODO Write a function to fetch youtube links for populated recipes (may need to go within render recipe cards function)
@@ -232,11 +250,11 @@ $('#card-container').on('click', '.youtube', function youTubeLink(){
           url: apiURL,
           dataType:"JSON"
      }).then(function(response){
-          var link= "https://youtube.com/watch?v=" + response.items[0].id.videoID
-          window.open(link)
-          console.log(response)
+          var link= "https://youtube.com/watch?v=" + response.items[0].id.videoId
+          window.open(link);
      })
 })
+
 //TODO Write a function to render popular recipe cards on page load
 $( window ).on( "load", function popularRecipes() {
      var requestURL = "https://www.thecocktaildb.com/api/json/v2/9973533/popular.php"
@@ -284,47 +302,100 @@ $( window ).on( "load", function popularRecipes() {
                     //push recipe object into our local recipes array
                     myRecipes.push(recipe);
                }
+               console.log('popular');
+               console.log(myRecipes);
+               rendertiles();
 })
-console.log('popular');
-console.log(myRecipes);
-rendertiles();
 })
+
 //TODO Write a function to render recipe cards upon search
-
 function rendertiles() {
-     for (var i = 0; i < myRecipes.length; i++) {
-          let tilep =$('<div class="tile is-parent">')
-
-          let tilec =$('<div class="tile is-child">')
-
-          let title =$('<p class="title">')
-
-          let figure =$('<figure class="image is-4by3">')
-          let image =$("<img>").attr('src', myRecipes[i].thumbnail);
-
-          let modalL =$("<a>").addClass('href');
-
+     for (var i = 0; i < myRecipes.length; i++) {          
+          let tile =$('<div class="tile is-3 box is-vertical mx-1 mb-4 has-background-warning">');
+          let title =$('<p class="title">');
+          let image =$('<img class="image is-128x128">').attr('src', myRecipes[i].thumbnail);
+          let modalL =$("<a>").addClass('recipe');
           let youtubeL =$("<a>").addClass('youtube');
-
           let wikiL =$("<a>").addClass('wiki');
 
           title.text(myRecipes[i].name);
-          modalL.text("link to recipe");
-          youtubeL.text("youtube");
-          wikiL.text("wiki");
+          modalL.text("Full Recipe");
+          modalL.attr('data-index', i);
+          youtubeL.text("Relevant YouTube");
+          youtubeL.attr('data-recipe', myRecipes[i].name);
+          wikiL.text("Relevent Wikipedia");
+          wikiL.attr('data-recipe', myRecipes[i].name);
 
-          cardCont.append(tilep);
-          tilep.append(tilec);
-          tilec.append(title);
-          tilec.append(figure);
-          figure.append(image);
-          tilec.append(modalL);
-          tilec.append(youtubeL);
-          tilec.append(wikiL);
-     
-     }
-          
+          cardCont.append(tile);         
+          tile.append(title);
+          tile.append(image);
+          tile.append(modalL);
+          tile.append(youtubeL);
+          tile.append(wikiL);
+     }         
 }
 
-
 //TODO Write a function to render a recipe modal when recipe is clicked
+cardCont.on('click', '.recipe', function renderModal() {
+     console.log('click');
+     index = $(this).attr('data-index');
+
+     var modal = $('<div id="modal" class="modal is-active">');
+     var modalBackground = $('<div class="modal-background">');
+     var modalContent = $('<div class="modal-content">');
+     var modalBox = $('<div class="box">');
+     var modalButton = $('<button class="modal-close is-large" aria-label="close">');
+
+     var recipeName = $('<h2 class="title">');
+     var recipeImage = $('<image class="image is-128x128">');
+     var recipeGlass = $('<p class="mt-2">');
+     var recipeIngredients = $('<div class="ingrModal mt-2">');
+     var recipeMeasurements = $('<div class="measModal mt-2">');
+     var recipeInstructions = $('<p class="mt-2">');
+
+     recipeName.text(myRecipes[index].name);
+     recipeImage.attr('src', myRecipes[index].thumbnail);
+     recipeGlass.text('Glass: ' + myRecipes[index].glassType);
+     
+     //Loop through available ingrdients/measurements and append them to their own divs
+     for(i = 0; i < myRecipes[index].ingredients.length; i++){
+          meas = $('<p>');
+          if (myRecipes[index].measurements[i] != undefined) {               
+               meas.text(myRecipes[index].measurements[i]);               
+          } else {
+               meas.text("");
+          }
+          recipeMeasurements.append(meas);
+
+          ingr = $('<p>');
+          ingr.text(myRecipes[index].ingredients[i]);
+          recipeIngredients.append(ingr);
+     }
+     recipeInstructions.text("Instructions: " + myRecipes[index].instructions);
+
+     $('body').append(modal);
+     modal.append(modalBackground);
+     modal.append(modalContent);
+     modal.append(modalButton);
+     modalContent.append(modalBox);
+     modalBox.append(recipeName);
+     modalBox.append(recipeImage);
+     modalBox.append(recipeMeasurements);
+     modalBox.append(recipeIngredients);
+     modalBox.append(recipeGlass);    
+     modalBox.append(recipeInstructions);
+})
+
+//Function to remove notification
+cardCont.on('click', '.delete', function removeNotification() {
+     $('#notification').remove();
+})
+
+//Function to remove modal
+$('body').on('click', '.modal-background', function removeModal() {
+     $('#modal').remove();
+});
+
+$('body').on('click', '.modal-close', function removeModal() {
+     $('#modal').remove();
+});
