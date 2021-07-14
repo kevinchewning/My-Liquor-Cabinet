@@ -200,6 +200,7 @@ function fetchRecipes() {
      }
      //Recipes that match are logged to the console. This is the info needed to render recipe cards.
      console.log(myRecipes);
+     rendertiles();
 }
 
 
@@ -210,5 +211,41 @@ function fetchRecipes() {
 //TODO Write a function to render popular recipe cards on page load
 
 //TODO Write a function to render recipe cards upon search
+
+function rendertiles() {
+     for (var i = 0; i < myRecipes.length; i++) {
+          let tilep =$('<div class="tile is-parent">')
+
+          let tilec =$('<div class="tile is-child">')
+
+          let title =$('<p class="title">')
+
+          let figure =$('<figure class="image is-4by3">')
+          let image =$("<img>").attr('src', myRecipes[i].thumbnail);
+
+          let modalL =$("<a>").addClass('href');
+
+          let youtubeL =$("<a>").addClass('youtube');
+
+          let wikiL =$("<a>").addClass('wiki');
+
+          title.text(myRecipes[i].name);
+          modalL.text("link to recipe");
+          youtubeL.text("youtube");
+          wikiL.text("wiki");
+
+          cardCont.append(tilep);
+          tilep.append(tilec);
+          tilec.append(title);
+          tilec.append(figure);
+          figure.append(image);
+          tilec.append(modalL);
+          tilec.append(youtubeL);
+          tilec.append(wikiL);
+     
+     }
+          
+}
+
 
 //TODO Write a function to render a recipe modal when recipe is clicked
