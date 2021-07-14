@@ -13,14 +13,9 @@ var recipeIDs = [];
 var myRecipes = [];
 
 //API Key(s)
-//TODO Get API key from "https://www.thecocktaildb.com/api.php"
 var cocktailAPI = 9973533;
+var apiKey = "AIzaSyCxmS-DDoBQ-DA9kHkCIk7msct3umZi_Mw"
 
-//TODO Get API key from "https://www.mediawiki.org/wiki/API:Main_page#API_documentation"
-
-//TODO Get API key from "https://developers.google.com/youtube/v3"
-//let apiKey = "AIzaSyCxmS-DDoBQ-DA9kHkCIk7msct3umZi_Mw"//
-//let apiURL =  "https://www.googleapis.com/youtube/v3" + userInput + "&appid=" + apiKey;//
 //Event Listeners
 searchBtn.on('click', fetchRecipes);
 
@@ -45,7 +40,7 @@ fetch("https://the-cocktail-db.p.rapidapi.com/list.php?i=list", {
           dropdownIngr();
      });
 
-//TODO Write a function to add all ingredients to dropdown
+//Add all ingredients to dropdown
 function dropdownIngr() {
      for (i = 0; i < ingredients.length; i++) {
           var ingredient = $('<a>');
@@ -55,11 +50,6 @@ function dropdownIngr() {
 
           $('#block-1').append(ingredient);
      }
-}
-
-//TODO Write a function to render dropdown menu
-function dropdown() {
-     document.getElementById("myDropdown").classList.toggle("show");
 }
 
 //filter dropdown ingredients to match what is typed in search box
@@ -77,7 +67,7 @@ function filterFunction() {
      }
 }
 
-//TODO Write a function that adds ingredient from dropdown to myIngredients variable when clicked.
+//Add ingredient from dropdown to myIngredients variable when clicked.
 dropIngr.on('click', 'a', function addIngr () {
      //retrieves ingredient name from the data-ingredient attribute of element clicked
      var ingredient = $(this).attr('data-ingredient');
@@ -94,7 +84,7 @@ dropIngr.on('click', 'a', function addIngr () {
           remove.text('✖');
           remove.addClass('remove');
 
-          //push ingredient value to myIngredients variable
+          //push ingredient value to myIngredients variable and local storage
           //Made lowercase for matching functions
           myIngredients.push(lowercase);
           localStorage.setItem('myIngredientsString', JSON.stringify(myIngredients));
@@ -104,7 +94,7 @@ dropIngr.on('click', 'a', function addIngr () {
      }
 });
 
-//Render locally saved ingredients on load
+//Render locally saved ingredients
 function renderMyIngredients () {
      for(i = 0; i < myIngredients.length; i++) {
           var ingredientEl = $('<li>');
@@ -120,17 +110,21 @@ function renderMyIngredients () {
      }
 }
 
+//Calls function on load
 renderMyIngredients();
 
-//TODO Write a function to remove ingredient when remove button is clicked (remove from screen and from myIngredients variable.)
+//Remove ingredient when remove button is clicked.
 ingrList.on('click', '.remove', function removeIngr() {
      var ingredient = $(this).parent().attr('data-ingredient');
      var index = myIngredients.indexOf(ingredient);
 
+     //If index value is valid, splice ingredient from myIngredients variable, update local storage
      if (index > -1) {
        myIngredients.splice(index, 1);
+       localStorage.setItem('myIngredientsString', JSON.stringify(myIngredients));
      }
 
+     //Removes element from screen
      $(this).parent().remove();
 })
 
@@ -162,6 +156,7 @@ function fetchAllRecipes() {
                return response.json();
           })
           .then(function (data) {
+               //Save all recipes in an object
                var recipe = {
                     name: "",
                     id: "",
@@ -208,6 +203,33 @@ fetchAllIDs();
 //Set timeout to allow time for ID's to populate before fetching recipes
 setTimeout(fetchAllRecipes, 1500);
 
+//Render recipe cards upon search
+function rendertiles() {
+     for (var i = 0; i < myRecipes.length; i++) {          
+          let tile =$('<div class="tile is-3 box is-vertical mx-1 mb-4 has-background-warning">');
+          let title =$('<p class="title">');
+          let image =$('<img class="image is-128x128">').attr('src', myRecipes[i].thumbnail);
+          let modalL =$("<a>").addClass('recipe');
+          let youtubeL =$("<a>").addClass('youtube');
+          let wikiL =$("<a>").addClass('wiki');
+
+          title.text(myRecipes[i].name);
+          modalL.text("Full Recipe");
+          modalL.attr('data-index', i);
+          youtubeL.text("YouTube");
+          youtubeL.attr('data-recipe', myRecipes[i].name);
+          wikiL.text("Wikipedia");
+          wikiL.attr('data-recipe', myRecipes[i].name);
+
+          cardCont.append(tile);         
+          tile.append(title);
+          tile.append(image);
+          tile.append(modalL);
+          tile.append(youtubeL);
+          tile.append(wikiL);
+     }         
+}
+
 //Fetches all recipes that have exact ingredient matches to available ingredients when search button is clicked.
 function fetchRecipes() {
      //Clear current recipes before new search
@@ -229,6 +251,7 @@ function fetchRecipes() {
           notification.text('Sorry! No recipes found that match your entered ingredients.')         
      } else {
           var message;
+          //If,Else for proper grammar =D
           if (myRecipes.length == 1) {
                message = "We have found " + myRecipes.length + " recipe that matches your ingredients!"
           } else {
@@ -236,13 +259,17 @@ function fetchRecipes() {
           }
           notification.text(message);          
      }
+
+     //Append notification
      cardCont.append(notification);
      notification.append(deleteBtn);
+
+     //Render new tiles
      rendertiles();
 }
 
 
-//TODO Write a function to fetch wiki's for populated recipes (may need to go within render recipe cards function)
+//Fetch wiki's for populated recipes (may need to go within render recipe cards function)
 $('#card-container').on('click', '.wiki', function wikilink(){
      var name = $(this).attr("data-recipe");
      let apiURL="https://en.wikipedia.org/w/rest.php/v1/search/page?q=" + name
@@ -256,7 +283,7 @@ $('#card-container').on('click', '.wiki', function wikilink(){
           window.open(link)         
      })
 })
-//TODO Write a function to fetch youtube links for populated recipes (may need to go within render recipe cards function)
+//Fetch youtube links for populated recipes (may need to go within render recipe cards function)
 
 $('#card-container').on('click', '.youtube', function youTubeLink(){
      var name = $(this).attr("data-recipe");
@@ -273,7 +300,7 @@ $('#card-container').on('click', '.youtube', function youTubeLink(){
      })
 })
 
-//TODO Write a function to render popular recipe cards on page load
+//Render popular recipe cards on page load
 $( window ).on( "load", function popularRecipes() {
      var requestURL = "https://www.thecocktaildb.com/api/json/v2/9973533/popular.php"
           fetch(requestURL)
@@ -281,7 +308,9 @@ $( window ).on( "load", function popularRecipes() {
                return response.json();
           })
           .then(function (data) {
+               //Loop through first 10 popular recipes
                for(i = 0; i < 10; i++) {
+                    //Create recipe object
                     var recipe = {
                          name: "",
                          id: "",
@@ -320,40 +349,13 @@ $( window ).on( "load", function popularRecipes() {
                     //push recipe object into our local recipes array
                     myRecipes.push(recipe);
                }
-               console.log('popular');
-               console.log(myRecipes);
+               
+               //Calls render function when done
                rendertiles();
 })
 })
 
-//TODO Write a function to render recipe cards upon search
-function rendertiles() {
-     for (var i = 0; i < myRecipes.length; i++) {          
-          let tile =$('<div class="tile is-3 box is-vertical mx-1 mb-4 has-background-warning">');
-          let title =$('<p class="title">');
-          let image =$('<img class="image is-128x128">').attr('src', myRecipes[i].thumbnail);
-          let modalL =$("<a>").addClass('recipe');
-          let youtubeL =$("<a>").addClass('youtube');
-          let wikiL =$("<a>").addClass('wiki');
-
-          title.text(myRecipes[i].name);
-          modalL.text("Full Recipe");
-          modalL.attr('data-index', i);
-          youtubeL.text("YouTube");
-          youtubeL.attr('data-recipe', myRecipes[i].name);
-          wikiL.text("Wikipedia");
-          wikiL.attr('data-recipe', myRecipes[i].name);
-
-          cardCont.append(tile);         
-          tile.append(title);
-          tile.append(image);
-          tile.append(modalL);
-          tile.append(youtubeL);
-          tile.append(wikiL);
-     }         
-}
-
-//TODO Write a function to render a recipe modal when recipe is clicked
+//Render a recipe modal when recipe is clicked
 cardCont.on('click', '.recipe', function renderModal() {
      console.log('click');
      index = $(this).attr('data-index');
@@ -404,6 +406,7 @@ cardCont.on('click', '.recipe', function renderModal() {
      modalBox.append(recipeInstructions);
 })
 
+//Render a modal on page load that informs user of how to use site.
 $( window ).on( "load", function splashModal() {
      console.log('load');
      var modal = $('<div id="modal" class="modal is-active">');
@@ -432,10 +435,12 @@ cardCont.on('click', '.delete', function removeNotification() {
 })
 
 //Function to remove modal
+//If user clicks outside of modal
 $('body').on('click', '.modal-background', function removeModal() {
      $('#modal').remove();
 });
 
+//If user clicks close button
 $('body').on('click', '.modal-close', function removeModal() {
      $('#modal').remove();
 });
