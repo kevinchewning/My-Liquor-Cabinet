@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   
-  <!--Bulma and our stylesheet loaded into head-->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,99 +16,47 @@
     <section class="hero" style="background-image: url('https://images.pexels.com/photos/1283219/pexels-photo-1283219.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')">
       <div class="hero-body">
         <div class="container">
-          <h1 class="title has-text-white">
-            My liquor cabinet
-          </h1>
-          <h2 class="subtitle has-text-white">
-            example
-          </h2>
+          <h1 class="title is-size-1 has-text-white">
+            My Liquor Cabinet
+          </h1>          
         </div>
       </div>
     </section>
 
-    <div id="ingr-container">
-      <div id="ingr-form" class="panel dropdown-content is-warning">
-        <!--Searchable dropdown for ingredients-->
-        <p class="panel-heading">Ingredients</p>
-        <div class="panel-block">
-          <p class="control has-icons-left">
-            <input class="input" type="text" placeholder="Search" id="myInput" onkeyup="filterFunction()" autocomplete="off">
-            <span class="icon is-left">
-              <i class="fas fa-search" aria-hidden="true"></i>
-            </span>
-          </p>
-          <div id="block-1"></div>
+    <main>
+      <div id="ingr-container" class="mt-4">
+        <div id="ingr-form" class="panel dropdown-content is-warning">
+          <!--Searchable dropdown for ingredients-->
+          <p class="panel-heading">Add Ingredients</p>
+          <div class="panel-block">
+            <p class="control has-icons-left">
+              <input class="input" type="text" placeholder="Search" id="myInput" onkeyup="filterFunction()" autocomplete="off">
+              <span class="icon is-left">
+                <i class="fas fa-search" aria-hidden="true"></i>
+              </span>
+            </p>
+            <div id="block-1"></div>
+          </div>
+        </div>
+        <!--SEARCH RECIPES button-->
+        <button id="searchBtn" class="button is-light">Search Recipes</button>
+        
+        <!--UL for ingredients-->
+        <p class="panel-heading" id="myIngrHeader">My Ingredients</p>
+        <ul id="ingr-list"></ul>
+      </div>
+
+      
+      <!--Container for recipe cards-->
+      <div id="card-container" class="tile is-ancestor is-flex-wrap-wrap m-0 mt-4 is-justify-content-space-evenly">
+        <div id="notification" class="notification is-warning has-text-weight-bold">
+          <button class="delete"></button>
+          Here are some popular recipes to get you started!
         </div>
       </div>
-      <!--SEARCH RECIPES button-->
-      <button id="searchBtn" class="button is-light">Search Recipes</button>
-      
-      <!--UL for ingredients-->
-      <p class="panel-heading" id="myIngrHeader">My Ingredients</p>
-      <ul id="ingr-list"></ul>
-    </div>
-
-     
-    <!--TODO Create container for recipe cards (id="card-container")-->
-<<<<<<< HEAD
-    <div id="card-container" class="tile is-ancestor"></div>
+    </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-=======
-    <div id="card-container"></div>
-    <!--
-      <div class="column-2">
-        <div class="card">
-          <div class="card-content">
-            <div class="content">
-              example
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-content">
-            <div class="content">
-              example
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="column-3">
-        <div class="card">
-          <div class="card-content">
-            <div class="content">
-              example2
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-content">
-            <div class="content">
-              example2
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="column-4">
-        <div class="card">
-          <div class="card-content">
-            <div class="content">
-              example3
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-content">
-            <div class="content">
-              example3
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  --> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
->>>>>>> b6a8152a7b91294a59d0905df05c5063dbfdad14
     <script src="./assets/scripts/script.js"></script>
   </body>
 
