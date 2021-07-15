@@ -86,6 +86,10 @@ main {
     user-select: none;
 }
 
+#exact:active, #partial:active {
+    color: gray;
+}
+
 #searchBtn {
     margin-bottom: 20px;
 }
