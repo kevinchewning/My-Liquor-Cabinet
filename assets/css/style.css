@@ -86,8 +86,8 @@ main {
     user-select: none;
 }
 
-#exact:active, #partial:active {
-    color: gray;
+.radio:hover {
+    color: #ffe08a;
 }
 
 #searchBtn {
