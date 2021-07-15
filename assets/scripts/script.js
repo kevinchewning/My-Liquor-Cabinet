@@ -69,6 +69,9 @@ function filterFunction() {
 
 //Add ingredient from dropdown to myIngredients variable when clicked.
 dropIngr.on('click', 'a', function addIngr () {
+     //Clear search input when use clicks ingredient they found
+     $('#myInput').val("");
+
      //retrieves ingredient name from the data-ingredient attribute of element clicked
      var ingredient = $(this).attr('data-ingredient');
      var lowercase = $(this).attr('data-ingredient').toLowerCase();
