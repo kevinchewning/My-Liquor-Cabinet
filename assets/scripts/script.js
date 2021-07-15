@@ -235,11 +235,21 @@ function fetchRecipes() {
      //Clear current recipes before new search
      myRecipes = [];
 
-     //Loop through available recipes and match recipes that user has all ingredients for
-     for (i = 0; i < recipes.length; i++) {
-          match = recipes[i].ingredients.every(val => myIngredients.includes(val));
-          if (match) {
-               myRecipes.push(recipes[i]);
+     if($('#exact').prop('checked')) {
+          //Loop through available recipes and match recipes that user has all ingredients for
+          for (i = 0; i < recipes.length; i++) {
+               match = recipes[i].ingredients.every(val => myIngredients.includes(val));
+               if (match) {
+                    myRecipes.push(recipes[i]);
+               }
+          }
+     } else {
+          //Loop through available recipes and match recipes that user has some ingredients for
+          for (i = 0; i < recipes.length; i++) {
+               match = recipes[i].ingredients.some(val => myIngredients.includes(val));
+               if (match) {
+                    myRecipes.push(recipes[i]);
+               }
           }
      }
      
