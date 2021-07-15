@@ -206,7 +206,7 @@ setTimeout(fetchAllRecipes, 1500);
 //Render recipe cards upon search
 function rendertiles() {
      for (var i = 0; i < myRecipes.length; i++) {          
-          let tile =$('<div class="tile is-3 box is-vertical mx-1 mb-4 has-background-warning">');
+          let tile =$('<div class="tile is-3 box is-vertical mx-1 mb-4 has-background-warning max-height">');
           let title =$('<p class="title">');
           let image =$('<img class="image is-128x128">').attr('src', myRecipes[i].thumbnail);
           let modalL =$("<a>").addClass('recipe');

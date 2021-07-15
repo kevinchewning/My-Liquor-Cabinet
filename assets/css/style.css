@@ -98,6 +98,10 @@ main {
     background-color: #ffe08a;
 }
 
+.max-height {
+    max-height: 336px;
+}
+
 .modal-content .box h2, .modal-content .box{
     background-color: var(--antique-ruby);
     color: white;
