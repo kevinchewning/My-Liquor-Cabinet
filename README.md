@@ -2,7 +2,7 @@
 
 ## About
 
-![My liquor cabinet screenshot](./assets/My-Liquor-Cabinet-screenshot.png)
+![My liquor cabinet screenshot](My-Liquor-Cabinet-screenshot.png)
 
 A website built to show cocktail recipes maching the ingredients available to the user. If that is not possible a near match to a cocktail with the majority of the ingredients. 
 
